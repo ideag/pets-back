@@ -152,4 +152,31 @@ describe('animal mutations tests', () => {
         return done();
       });
   });
+
+  it('Delete animal', (done) => {
+    const mutation = 'deleteAnimal';
+    const deleteInput = `{ id: 2 }`;
+    const expectedResponse = { id: 2 };
+
+    request
+      .post('/graphql')
+      .send({
+        query: `
+            mutation {
+                ${mutation}(input: ${deleteInput})
+                    ${animalFields}
+                }`,
+      })
+      .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.log(res.body);
+          return done(err);
+        }
+        expect(res.body.data[mutation]).to.deep.include(expectedResponse);
+        return done();
+      });
+  });
 });

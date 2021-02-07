@@ -149,7 +149,7 @@ CREATE TABLE animal (
 );
 
 CREATE TABLE animal_details (
-    animal_id INTEGER PRIMARY KEY REFERENCES animal(id),
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE,
     breed_id INTEGER REFERENCES breed(id),
     gender_id gender,
     color_id INTEGER REFERENCES color(code),
@@ -162,7 +162,7 @@ CREATE TABLE animal_details (
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
 
 CREATE TABLE animal_registration (
-    animal_id INTEGER PRIMARY KEY REFERENCES animal(id),
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE,
     registration_no VARCHAR(256) NOT NULL UNIQUE,
     registration_date DATE DEFAULT CURRENT_DATE,
     status registration_status DEFAULT 'Active',
@@ -192,7 +192,7 @@ COMMENT ON COLUMN install_place_translation.language is 'Language code based on 
 CREATE TYPE chip_status AS ENUM ('Implanted', 'Removed');
 
 CREATE TABLE animal_microchip (
-    animal_id INTEGER REFERENCES animal(id) NOT NULL,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     microchip_id VARCHAR(256) NOT NULL,
     chip_company_code chip_company_code NOT NULL,
     install_date DATE,
@@ -225,7 +225,7 @@ COMMENT ON COLUMN event_translation.language is 'Language code based on BCP 47';
 
 CREATE TABLE animal_event_general (
     id SERIAL PRIMARY KEY,
-    animal INTEGER REFERENCES animal(id) NOT NULL,
+    animal INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     type event,
     expenses NUMERIC,
     date_time TIMESTAMP,
@@ -234,7 +234,7 @@ CREATE TABLE animal_event_general (
 
 CREATE TABLE animal_event_medical_record (
     id SERIAL PRIMARY KEY,
-    animal INTEGER REFERENCES animal(id) NOT NULL,
+    animal INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     type event,
     expenses NUMERIC,
     date_time TIMESTAMP,
