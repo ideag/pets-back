@@ -18,6 +18,7 @@ export const animalDetailsFields = `
         animalId
         breed {
             id
+            abbreviation
             value
         }
         species {
@@ -97,5 +98,24 @@ export const organizationFields = `
         streetAddress,
         phone,
         modTime
+    }
+`;
+
+export const eventTypeFields = `
+    {
+        id,
+        type
+    }
+`;
+
+export const eventFields = `
+    {
+        id,
+        animal,
+        type ${eventTypeFields},
+        expenses,
+        dateTime,
+        comments,
+        category
     }
 `;
